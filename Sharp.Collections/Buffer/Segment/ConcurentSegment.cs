@@ -92,7 +92,7 @@ namespace Sharp.Collections
             }
         }
 
-        public override bool TryRead([MaybeNullWhen(false)] out TItem item, bool moveTail = true)
+        public override bool TryRead([MaybeNullWhen(false)] out TItem item, bool moveHead = true)
         {
             int[] sequences = _sequences;
             SpinWait spinner = default;
@@ -106,7 +106,7 @@ namespace Sharp.Collections
 
                 if (diff == 0)
                 {
-                    if (moveTail)
+                    if (moveHead)
                     {
                         if (Interlocked.CompareExchange(ref _head, currentHead + 1, currentHead) == currentHead)
                         {

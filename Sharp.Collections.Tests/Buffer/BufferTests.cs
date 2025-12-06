@@ -7,7 +7,7 @@ namespace Sharp.Collections.Tests
     public class BufferTests
     {
         [Fact]
-        public void Initialization_WhenBufferSizeProvided_ShouldInitializeBufferProperly()
+        public void NewBufferInvokedWithSize_WhenProvidedBufferSize_ShouldCreateNewBuffer()
         {
             // Arrange
             Buffer<int> buffer = new Buffer<int>(5);
@@ -24,8 +24,8 @@ namespace Sharp.Collections.Tests
         public void WriteAndRead_WhenItemsWrittenAndRead_ShouldReturnCorrectItem()
         {
             // Arrange
-            string firstItem = "Item1";
-            string secondItem = "Item2";
+            string firstItem = nameof(firstItem);
+            string secondItem = nameof(secondItem);
             Buffer<string> buffer = new Buffer<string>(3);
 
             // Act
@@ -69,7 +69,7 @@ namespace Sharp.Collections.Tests
         }
 
         [Fact]
-        public void TryWrite_WhenBufferFull_ShouldReturnFalse()
+        public void TryWrite_WhenBufferIsFull_ShouldReturnFalse()
         {
             // Arrange
             Buffer<double> buffer = new Buffer<double>(2);
@@ -83,7 +83,7 @@ namespace Sharp.Collections.Tests
         }
 
         [Fact]
-        public void TryRead_WhenBufferEmpty_ShouldReturnFalse()
+        public void TryRead_WhenBufferIsEmpty_ShouldReturnFalse()
         {
             // Arrange
             Buffer<int> buffer = new Buffer<int>(2);
@@ -97,7 +97,7 @@ namespace Sharp.Collections.Tests
         }
 
         [Fact]
-        public void Write_WhenMoveTailFalse_ShouldNotIncrementTail()
+        public void Write_WhenMoveTailIsFalse_ShouldNotIncrementTail()
         {
             // Arrange
             Buffer<int> buffer = new Buffer<int>(3);
@@ -113,7 +113,7 @@ namespace Sharp.Collections.Tests
         public void TryRead_WhenMoveHeadIsFalse_ShouldNotIncrementHead()
         {
             // Arrange
-            string item = "Item";
+            string item = nameof(item);
             Buffer<string> buffer = new Buffer<string>(2);
 
             // Act
@@ -125,7 +125,7 @@ namespace Sharp.Collections.Tests
         }
 
         [Fact]
-        public void Write_WhenBufferOverflow_ShouldThrowIndexOutOfRangeException()
+        public void Write_WhenBufferOverflows_ShouldThrowIndexOutOfRangeException()
         {
             // Arrange
             Buffer<int> buffer = new Buffer<int>(2);
@@ -139,7 +139,7 @@ namespace Sharp.Collections.Tests
         }
 
         [Fact]
-        public void Read_WhenBufferEmpty_ShouldThrowInvalidOperationException()
+        public void Read_WhenBufferIsEmpty_ShouldThrowInvalidOperationException()
         {
             // Arrange
             var buffer = new Buffer<double>(2);

@@ -7,29 +7,34 @@ namespace Sharp.Collections.Tests
 {
     public class ConcurrentSegmentTests
     {
+        private static readonly Random _random = new Random();
+
         [Fact]
-        public void Initialization_WhenSegmentSizeProvided_ShouldInitializeSegmentProperly()
+        public void NewConcurrentSegment_WhenProvidedSegmentSize_ShouldCreateConcurrentSegment()
         {
             // Arrange
-            Segment<int> segment = new Segment<int>(5);
+            int segmentSize = _random.Next();
 
-            // Act & Assert
+            // Act
+            ConcurrentSegment<int> segment = new ConcurrentSegment<int>(segmentSize);
+
+            // Assert
             Assert.NotNull(segment);
             Assert.Equal(0, segment.Head);
             Assert.Equal(0, segment.Tail);
             Assert.Equal(0, segment.Count);
-            Assert.Equal(5, segment.Size);
+            Assert.Equal(segmentSize, segment.Size);
             Assert.Null(segment.NextHead);
             Assert.Null(segment.NextTail);
         }
 
         [Fact]
-        public void WriteAndRead_WhenItemsWrittenAndRead_ShouldReturnCorrectItem()
+        public void WriteAndRead_WhenItemsAreWrittenAndRead_ShouldReturnCorrectItem()
         {
             // Arrange
-            string firstItem = "Item1";
-            string secondItem = "Item2";
-            Segment<string> segment = new Segment<string>(3);
+            string firstItem = nameof(firstItem);
+            string secondItem = nameof(secondItem);
+            ConcurrentSegment<string> segment = new ConcurrentSegment<string>(3);
 
             // Act
             segment.Write(firstItem);
@@ -41,26 +46,26 @@ namespace Sharp.Collections.Tests
         }
 
         [Fact]
-        public void MultipleReads_WhenItemsWrittenAndRead_ShouldReturnCorrectItems()
+        public void MultipleReads_WhenItemsAreWrittenAndRead_ShouldReturnCorrectItems()
         {
             // Arrange
-            int segmnetSize = 3;
+            int segmentSize = 3;
             int offset = 4;
-            Segment<int> segment = new Segment<int>(segmnetSize);
+            ConcurrentSegment<int> segment = new ConcurrentSegment<int>(segmentSize);
             List<int> expectedValues = [4, 5, 6];
             List<int> actualValues = [];
 
             // Act
-            for (int index = 0; index < segmnetSize; index++)
+            for (int index = 0; index < segmentSize; index++)
                 segment.Write(index);
 
-            for (int index = 0; index < segmnetSize; index++)
+            for (int index = 0; index < segmentSize; index++)
                 segment.Read();
 
-            for (int index = 0; index < segmnetSize; index++)
+            for (int index = 0; index < segmentSize; index++)
                 segment.Write(index + offset);
 
-            for (int index = 0; index < segmnetSize; index++)
+            for (int index = 0; index < segmentSize; index++)
             {
                 int expected = segment.Read();
 
@@ -72,10 +77,10 @@ namespace Sharp.Collections.Tests
         }
 
         [Fact]
-        public void TryWrite_WhenBufferFull_ShouldReturnFalse()
+        public void TryWrite_WhenConcurrentSegmentIsFull_ShouldReturnFalse()
         {
             // Arrange
-            Segment<double> segment = new Segment<double>(2);
+            ConcurrentSegment<double> segment = new ConcurrentSegment<double>(2);
 
             // Act
             segment.Write(1.0);
@@ -86,10 +91,24 @@ namespace Sharp.Collections.Tests
         }
 
         [Fact]
-        public void TryRead_WhenBufferEmpty_ShouldReturnFalse()
+        public void TryWrite_WhenConcurrentSegmentIsNotFull_ShouldReturnTrue()
         {
             // Arrange
-            Segment<int> segment = new Segment<int>(2);
+            ConcurrentSegment<double> segment = new ConcurrentSegment<double>(3);
+
+            // Act
+            segment.Write(1.0);
+            segment.Write(2.0);
+
+            // Assert
+            Assert.True(segment.TryWrite(3.0));
+        }
+
+        [Fact]
+        public void TryRead_WhenConcurrentSegmentIsEmpty_ShouldReturnFalse()
+        {
+            // Arrange
+            ConcurrentSegment<int> segment = new ConcurrentSegment<int>(2);
 
             // Act
             bool succeded = segment.TryRead(out int item);
@@ -100,10 +119,10 @@ namespace Sharp.Collections.Tests
         }
 
         [Fact]
-        public void Write_WhenMoveTailFalse_ShouldNotIncrementTail()
+        public void Write_WhenMoveTailIsFalse_ShouldNotIncrementTail()
         {
             // Arrange
-            Segment<int> segment = new Segment<int>(3);
+            ConcurrentSegment<int> segment = new ConcurrentSegment<int>(3);
 
             // Act
             segment.Write(1, moveTail: false);
@@ -116,8 +135,8 @@ namespace Sharp.Collections.Tests
         public void TryRead_WhenMoveHeadIsFalse_ShouldNotIncrementHead()
         {
             // Arrange
-            string item = "Item";
-            Segment<string> segment = new Segment<string>(2);
+            string item = nameof(item);
+            ConcurrentSegment<string> segment = new ConcurrentSegment<string>(2);
 
             // Act
             segment.Write(item);
@@ -128,10 +147,10 @@ namespace Sharp.Collections.Tests
         }
 
         [Fact]
-        public void Write_WhenBufferOverflow_ShouldThrowIndexOutOfRangeException()
+        public void Write_WhenConcurrentSegmentOverflows_ShouldThrowIndexOutOfRangeException()
         {
             // Arrange
-            Segment<int> segment = new Segment<int>(2);
+            ConcurrentSegment<int> segment = new ConcurrentSegment<int>(2);
 
             // Act
             segment.Write(1);
@@ -142,10 +161,10 @@ namespace Sharp.Collections.Tests
         }
 
         [Fact]
-        public void Read_WhenBufferEmpty_ShouldThrowInvalidOperationException()
+        public void Read_WhenConcurrentSegmentIsEmpty_ShouldThrowInvalidOperationException()
         {
             // Arrange
-            var segment = new Segment<double>(2);
+            ConcurrentSegment<double> segment = new ConcurrentSegment<double>(2);
 
             // Act & Assert
             Assert.Throws<InvalidOperationException>(() => segment.Read());

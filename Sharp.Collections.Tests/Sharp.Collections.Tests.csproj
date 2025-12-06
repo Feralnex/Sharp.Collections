@@ -4,26 +4,25 @@
     <TargetFramework>net8.0</TargetFramework>
     <ImplicitUsings>disable</ImplicitUsings>
     <Nullable>enable</Nullable>
-
+    <WarningsAsErrors>nullable</WarningsAsErrors>
     <IsPackable>false</IsPackable>
     <IsTestProject>true</IsTestProject>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.6.0" />
-    <PackageReference Include="xunit" Version="2.4.2" />
-    <PackageReference Include="xunit.runner.visualstudio" Version="2.4.5">
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-      <PrivateAssets>all</PrivateAssets>
-    </PackageReference>
-    <PackageReference Include="coverlet.collector" Version="6.0.0">
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-      <PrivateAssets>all</PrivateAssets>
-    </PackageReference>
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.8.0" />
+    <PackageReference Include="xunit" Version="2.5.3" />
+    <PackageReference Include="xunit.runner.visualstudio" Version="2.5.3" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\Sharp.Collections\Sharp.Collections.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="Sharp">
+      <HintPath>..\..\Sharp\Sharp\bin\Debug\net8.0\Sharp.dll</HintPath>
+    </Reference>
   </ItemGroup>
 
 </Project>

@@ -6,28 +6,33 @@ namespace Sharp.Collections.Tests
 {
     public class SegmentTests
     {
+        private static readonly Random _random = new Random();
+
         [Fact]
-        public void Initialization_WhenSegmentSizeProvided_ShouldInitializeSegmentProperly()
+        public void NewSegment_WhenSegmentSizeProvided_ShouldCreateNewSegment()
         {
             // Arrange
-            Segment<int> segment = new Segment<int>(5);
+            int segmentSize = _random.Next();
 
-            // Act & Assert
+            // Act
+            Segment<int> segment = new Segment<int>(segmentSize);
+
+            // Assert
             Assert.NotNull(segment);
             Assert.Equal(0, segment.Head);
             Assert.Equal(0, segment.Tail);
             Assert.Equal(0, segment.Count);
-            Assert.Equal(5, segment.Size);
+            Assert.Equal(segmentSize, segment.Size);
             Assert.Null(segment.NextHead);
             Assert.Null(segment.NextTail);
         }
 
         [Fact]
-        public void WriteAndRead_WhenItemsWrittenAndRead_ShouldReturnCorrectItem()
+        public void WriteAndRead_WhenItemsAreWrittenAndRead_ShouldReturnCorrectItem()
         {
             // Arrange
-            string firstItem = "Item1";
-            string secondItem = "Item2";
+            string firstItem = nameof(firstItem);
+            string secondItem = nameof(secondItem);
             Segment<string> segment = new Segment<string>(3);
 
             // Act
@@ -40,7 +45,7 @@ namespace Sharp.Collections.Tests
         }
 
         [Fact]
-        public void MultipleReads_WhenItemsWrittenAndRead_ShouldReturnCorrectItems()
+        public void MultipleReads_WhenItemsAreWrittenAndRead_ShouldReturnCorrectItems()
         {
             // Arrange
             int segmnetSize = 3;
@@ -71,7 +76,7 @@ namespace Sharp.Collections.Tests
         }
 
         [Fact]
-        public void TryWrite_WhenSegmentFull_ShouldReturnFalse()
+        public void TryWrite_WhenSegmentIsFull_ShouldReturnFalse()
         {
             // Arrange
             Segment<double> segment = new Segment<double>(2);
@@ -85,7 +90,7 @@ namespace Sharp.Collections.Tests
         }
 
         [Fact]
-        public void TryRead_WhenSegmentEmpty_ShouldReturnFalse()
+        public void TryRead_WhenSegmentIsEmpty_ShouldReturnFalse()
         {
             // Arrange
             Segment<int> segment = new Segment<int>(2);
@@ -99,7 +104,7 @@ namespace Sharp.Collections.Tests
         }
 
         [Fact]
-        public void Write_WhenMoveTailFalse_ShouldNotIncrementTail()
+        public void Write_WhenMoveTailIsFalse_ShouldNotIncrementTail()
         {
             // Arrange
             Segment<int> segment = new Segment<int>(3);
@@ -115,7 +120,7 @@ namespace Sharp.Collections.Tests
         public void TryRead_WhenMoveHeadIsFalse_ShouldNotIncrementHead()
         {
             // Arrange
-            string item = "Item";
+            string item = nameof(item);
             Segment<string> segment = new Segment<string>(2);
 
             // Act
@@ -127,7 +132,7 @@ namespace Sharp.Collections.Tests
         }
 
         [Fact]
-        public void Write_WhenSegmentOverflow_ShouldThrowIndexOutOfRangeException()
+        public void Write_WhenSegmentOverflows_ShouldThrowIndexOutOfRangeException()
         {
             // Arrange
             Segment<int> segment = new Segment<int>(2);
@@ -141,7 +146,7 @@ namespace Sharp.Collections.Tests
         }
 
         [Fact]
-        public void Read_WhenSegmentEmpty_ShouldThrowInvalidOperationException()
+        public void Read_WhenSegmentIsEmpty_ShouldThrowInvalidOperationException()
         {
             // Arrange
             var segment = new Segment<double>(2);

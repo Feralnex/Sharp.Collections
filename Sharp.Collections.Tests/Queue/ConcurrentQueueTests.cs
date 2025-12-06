@@ -22,7 +22,7 @@ namespace Sharp.Collections.Tests
         }
 
         [Fact]
-        public void Enqueue_WhenNullEnqueued_ShouldThrowArgumentNullException()
+        public void Enqueue_WhenProvidedNull_ShouldThrowArgumentNullException()
         {
             // Arrange
             ConcurrentQueue<object> queue = new ConcurrentQueue<object>();
@@ -32,7 +32,7 @@ namespace Sharp.Collections.Tests
         }
 
         [Fact]
-        public void TryEnqueue_WhenNullEnqueued_ShouldReturnFalse()
+        public void TryEnqueue_WhenProvidedNull_ShouldReturnFalse()
         {
             // Arrange
             ConcurrentQueue<object> queue = new ConcurrentQueue<object>();
@@ -45,7 +45,7 @@ namespace Sharp.Collections.Tests
         }
 
         [Fact]
-        public void Dequeue_WhenQueueNotEmpty_ShouldRemoveAndReturnItem()
+        public void Dequeue_WhenConcurrentQueueIsNotEmpty_ShouldRemoveAndReturnItem()
         {
             // Arrange
             ConcurrentQueue<int> queue = new ConcurrentQueue<int>();
@@ -60,7 +60,7 @@ namespace Sharp.Collections.Tests
         }
 
         [Fact]
-        public void Dequeue_WhenQueueEmpty_ShouldThrowInvalidOperationException()
+        public void Dequeue_WhenConcurrentQueueIsEmpty_ShouldThrowInvalidOperationException()
         {
             // Arrange
             ConcurrentQueue<int> queue = new ConcurrentQueue<int>();
@@ -70,7 +70,7 @@ namespace Sharp.Collections.Tests
         }
 
         [Fact]
-        public void TryDequeue_WhenQueueNotEmpty_ShouldRemoveAndReturnItem()
+        public void TryDequeue_WhenConcurrentQueueIsNotEmpty_ShouldRemoveAndReturnItem()
         {
             // Arrange
             ConcurrentQueue<int> queue = new ConcurrentQueue<int>();
@@ -86,7 +86,7 @@ namespace Sharp.Collections.Tests
         }
 
         [Fact]
-        public void TryDequeue_WhenQueueEmpty_ShouldReturnFalse()
+        public void TryDequeue_WhenConcurrentQueueIsEmpty_ShouldReturnFalse()
         {
             // Arrange
             ConcurrentQueue<int> queue = new ConcurrentQueue<int>();
@@ -101,7 +101,7 @@ namespace Sharp.Collections.Tests
         }
 
         [Fact]
-        public void Peek_WhenQueueNotEmpty_ShouldReturnItemWithoutRemoving()
+        public void Peek_WhenConcurrentQueueIsNotEmpty_ShouldReturnItemWithoutRemoving()
         {
             // Arrange
             ConcurrentQueue<int> queue = new ConcurrentQueue<int>();
@@ -116,7 +116,7 @@ namespace Sharp.Collections.Tests
         }
 
         [Fact]
-        public void Peek_WhenQueueEmpty_ShouldThrowInvalidOperationException()
+        public void Peek_WhenConcurrentQueueIsEmpty_ShouldThrowInvalidOperationException()
         {
             // Arrange
             ConcurrentQueue<int> queue = new ConcurrentQueue<int>();
@@ -126,7 +126,7 @@ namespace Sharp.Collections.Tests
         }
 
         [Fact]
-        public void TryPeek_WhenQueueNotEmpty_ShouldReturnItemWithoutRemoving()
+        public void TryPeek_WhenConcurrentQueueIsNotEmpty_ShouldReturnItemWithoutRemoving()
         {
             // Arrange
             ConcurrentQueue<int> queue = new ConcurrentQueue<int>();
@@ -142,7 +142,7 @@ namespace Sharp.Collections.Tests
         }
 
         [Fact]
-        public void TryPeek_WhenQueueEmpty_ShouldReturnFalse()
+        public void TryPeek_WhenConcurrentQueueIsEmpty_ShouldReturnFalse()
         {
             // Arrange
             ConcurrentQueue<int> queue = new ConcurrentQueue<int>();
@@ -157,7 +157,7 @@ namespace Sharp.Collections.Tests
         }
 
         [Fact]
-        public void Enqueue_SegmentSizeItems_ThenDequeue_ShouldDequeueCorrectItems()
+        public void EnqueueAndDequeue_WhenEnqueuedEqualNumberOfItemsToSegmentSize_ShouldDequeueCorrectItems()
         {
             // Arrange
             int segmentSize = 5;
@@ -183,7 +183,7 @@ namespace Sharp.Collections.Tests
         }
 
         [Fact]
-        public void Enqueue_MoreThanSegmentSizeItems_ShouldEnqueueItemsSuccessfully()
+        public void Enqueue_WhenEnqueuedMoreItemsThanSegmentSize_ShouldEnqueueItemsSuccessfully()
         {
             // Arrange
             int segmentSize = 5;
@@ -199,7 +199,7 @@ namespace Sharp.Collections.Tests
         }
 
         [Fact]
-        public void Enqueue_MoreThanSegmentSizeItems_ThenDequeue_ShouldDequeueCorrectItems()
+        public void EnqueueAndDequeue_WhenEnqueuedMoreItemsThanSegmentSize_ShouldDequeueCorrectItems()
         {
             // Arrange
             int numberOfItems = 100000;
@@ -228,7 +228,7 @@ namespace Sharp.Collections.Tests
         }
 
         [Fact]
-        public void Enqueue_MoreThanSegmentSizeItems_ThenTryDequeue_ShouldDequeueCorrectItems()
+        public void EnqueueAndTryDequeue_WhenEnqueuedMoreItemsThanSegmentSize_ShouldDequeueCorrectItems()
         {
             // Arrange
             int numberOfItems = 100000;

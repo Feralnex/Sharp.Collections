@@ -5,7 +5,7 @@ namespace Sharp.Collections.Tests
     public class SegmentsTests
     {
         [Fact]
-        public void Constructor_WhenInitializedWithRoot_ShouldSetHeadAndTailToRoot()
+        public void NewSegments_WhenProvidedRoot_ShouldSetHeadAndTailToRoot()
         {
             // Arrange
             int segmentSize = 16;
@@ -56,7 +56,7 @@ namespace Sharp.Collections.Tests
         }
 
         [Fact]
-        public void MoveToNextHead_WhenMovingToNextHead_ShouldMoveHeadToNextHead()
+        public void MoveToNextHead_WhenCalledOnSegmentsWithOrWithoutNextHead_ShouldMoveHeadToNextHead()
         {
             // Arrange
             int segmentSize = 16;
@@ -75,7 +75,7 @@ namespace Sharp.Collections.Tests
         }
 
         [Fact]
-        public void MoveToNextTail_WhenMovingToNextTail_ShouldMoveHeadToNextTail()
+        public void MoveToNextTail_WhenCalledOnSegmentsWithOrWithoutNextTail_ShouldMoveHeadToNextTail()
         {
             // Arrange
             int segmentSize = 16;

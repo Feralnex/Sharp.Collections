@@ -4,14 +4,12 @@ namespace Sharp.Collections
 {
     public class Queue<TItem> : IQueue<TItem>
     {
-        protected static readonly byte _defaultSegmentSize = 64;
-
         protected ISegments<TItem> Enqueues { get; private set; }
         protected ISegments<TItem> Dequeues { get; private set; }
 
         public virtual int Count { get; protected set; }
 
-        public Queue() : this(_defaultSegmentSize) { }
+        public Queue() : this(Defaults.SegmentSize) { }
 
         public Queue(int segmentSize)
         {

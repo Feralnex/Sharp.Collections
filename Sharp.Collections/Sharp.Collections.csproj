@@ -4,6 +4,23 @@
     <TargetFramework>net8.0</TargetFramework>
     <ImplicitUsings>disable</ImplicitUsings>
     <Nullable>enable</Nullable>
+    <WarningsAsErrors>nullable</WarningsAsErrors>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <Platforms>AnyCPU;x64</Platforms>
+    <EnforceExtendedAnalyzerRules>true</EnforceExtendedAnalyzerRules>
+    <PlatformTarget>AnyCPU</PlatformTarget>
   </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="CommunityToolkit.HighPerformance" Version="8.4.0" />
+    <PackageReference Include="Microsoft.CodeAnalysis.Common" Version="4.14.0" />
+    <PackageReference Include="Microsoft.Extensions.Hosting" Version="9.0.8" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="Sharp">
+      <HintPath>..\..\Sharp\Sharp\bin\Release\net8.0\Sharp.dll</HintPath>
+    </Reference>
+  </ItemGroup>
 
 </Project>
