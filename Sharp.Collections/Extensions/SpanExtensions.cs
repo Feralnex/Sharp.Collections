@@ -28,5 +28,16 @@ namespace Sharp.Collections.Extensions
 
             return searchSpace.DangerousIndexOfAnyNumberExcept(value, index, length, offset);
         }
+
+        public static unsafe void CopyTo(this ReadOnlySpan<char> source, sbyte* destination)
+        {
+            for (int index = 0; index < source.Length; index++)
+            {
+                char character = source[index];
+                destination[index] = (sbyte)(character <= 0x7F ? character : 0x3F);
+            }
+
+            destination[source.Length] = 0;
+        }
     }
 }

@@ -229,7 +229,7 @@ public class NativeList<TElement>
 ```
 
 ## SpanExtensions
-A set of extension methods for `Span<T>` that provide specialized search functionality for numeric types implementing `INumber<TValue>`.
+A set of extension methods for `Span<T>` that provide specialized search functionality for numeric types implementing `INumber<TValue>` and unsafe copy operations for character spans.
 
 ### Methods
 - **IndexOfAnyNumberExcept<TValue>(span, value)**  
@@ -239,7 +239,14 @@ A set of extension methods for `Span<T>` that provide specialized search functio
 
 - **IndexOfAnyNumberExcept<TValue>(span, value, offset)**  
   Searches the span starting from the given `offset` for the first index containing a number that is **not equal** to the specified `value`.  
-  - Returns the index of the first non-matching element after the offset, or `-1` if none
+  - Returns the index of the first non-matching element after the offset, or `-1` if none.  
+
+- **CopyTo(ReadOnlySpan<char> source, sbyte* destination)**  
+  Copies characters from a `ReadOnlySpan<char>` into an unmanaged `sbyte*` buffer.  
+  - Each character is converted to its ASCII representation if it is within the range `0x00–0x7F`.  
+  - Characters outside this range are replaced with `'?'` (`0x3F`).  
+  - A null terminator (`0`) is appended at the end of the copied sequence.  
+  - Useful for interop scenarios where unmanaged code expects null-terminated ASCII strings.  
 
 ## Selection<TTarget>
 An abstract base class representing a selection of targets, built on top of `Maybe<TTarget>` (from the [Sharp](https://github.com/Feralnex/Sharp) library).  

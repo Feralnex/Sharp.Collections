@@ -165,5 +165,57 @@ namespace Sharp.Collections.Tests.Extensions
             // Assert
             Assert.Equal(-1, result);
         }
+
+        [Fact]
+        public unsafe void CopyTo_WhenAllAsciiCharacters_ShouldCopyCorrectlyAndNullTerminate()
+        {
+            // Arrange
+            ReadOnlySpan<char> source = "Hello";
+            sbyte* destination = stackalloc sbyte[source.Length + 1];
+
+            // Act
+            source.CopyTo(destination);
+
+            // Assert
+            Assert.Equal((sbyte)'H', destination[0]);
+            Assert.Equal((sbyte)'e', destination[1]);
+            Assert.Equal((sbyte)'l', destination[2]);
+            Assert.Equal((sbyte)'l', destination[3]);
+            Assert.Equal((sbyte)'o', destination[4]);
+            Assert.Equal(0, destination[5]); // null terminator
+        }
+
+        [Fact]
+        public unsafe void CopyTo_WhenContainsNonAsciiCharacters_ShouldReplaceWithQuestionMark()
+        {
+            // Arrange
+            ReadOnlySpan<char> source = "Hęllo"; // 'ę' is non-ASCII
+            sbyte* destination = stackalloc sbyte[source.Length + 1];
+
+            // Act
+            source.CopyTo(destination);
+
+            // Assert
+            Assert.Equal((sbyte)'H', destination[0]);
+            Assert.Equal((sbyte)'?', destination[1]); // replaced non-ASCII
+            Assert.Equal((sbyte)'l', destination[2]);
+            Assert.Equal((sbyte)'l', destination[3]);
+            Assert.Equal((sbyte)'o', destination[4]);
+            Assert.Equal(0, destination[5]); // null terminator
+        }
+
+        [Fact]
+        public unsafe void CopyTo_WhenEmptySpan_ShouldOnlyWriteNullTerminator()
+        {
+            // Arrange
+            ReadOnlySpan<char> source = ReadOnlySpan<char>.Empty;
+            sbyte* destination = stackalloc sbyte[1];
+
+            // Act
+            source.CopyTo(destination);
+
+            // Assert
+            Assert.Equal(0, destination[0]); // only null terminator
+        }
     }
 }
